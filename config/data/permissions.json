@@ -1,0 +1,12 @@
+{
+    "ROLE_ADMIN": {
+        "view": true,
+        "edit": true,
+        "delete": true
+    },
+    "ROLE_USER": {
+        "view": true,
+        "edit": true,
+        "delete": true
+    }
+}

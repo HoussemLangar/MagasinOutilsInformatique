@@ -1,0 +1,19 @@
+### Symfony Framework Bundle ###
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+### PHPUnit ###
+/phpunit.xml
+/.phpunit.result.cache
+### Symfony PHPUnit Bridge ###
+/.phpunit.result.cache
+/phpunit.xml
+
+### Autres ###
+.create_shortcut_linux.sh
+.create_shortcut_windows.ps1
+.docker-compose.yml
+.init-db.sh
+.env.prod.local
+.Version20240827015400.php

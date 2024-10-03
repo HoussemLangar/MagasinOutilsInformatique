@@ -1,0 +1,284 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des opérations de stock{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            gap: 25px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+        .header .btn-add {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            left: 25px;
+        }
+        .header .btn-add:hover {
+            background-color: #2980b9;
+        }
+        .header .btn-logout {
+            background-color: #2575fc;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 100px; 
+        }
+        .header .btn-logout:hover {
+            background-color: #c0392b;
+        }
+        .main-content {
+            padding: 80px 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        li .details {
+            max-width: 900px;
+            justify-content: space-between;
+        }
+        li .details strong {
+            display: inline-block;
+            font-weight: 600;
+            color: #555;
+            margin-right: 10px;
+            margin-left: 20px;
+            justify-content: space-between;
+        }
+        .btn-back {
+            background-color: #d3d3d3;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #bfbfbf;
+        }
+        .btn-edit, .btn-delete {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn-edit:hover {
+            background-color: #2980b9;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+        .flash-message {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .flash-message i {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        .flash-success { background-color: #28a745; border: 1px solid #1e7e34; }
+        .flash-error { background-color: #dc3545; border: 1px solid #c82333; }
+        .flash-warning { background-color: #ffc107; border: 1px solid #e0a800; color: #212529; }
+        .flash-info { background-color: #17a2b8; border: 1px solid #138496; }
+        .flash-message.show { opacity: 1; }
+        .flash-message.hide { opacity: 0; }
+        .flash-message { transition: opacity 0.5s ease-in-out; }
+        .flash-success i { color: #fff; }
+        .flash-error i { color: #fff; }
+        .flash-warning i { color: #212529; }
+        .flash-info i { color: #fff; }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .search-bar input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 300px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+        .no-articles {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+                .header .btn-add {
+            left: 100px;
+        }
+        .header .btn-home {
+                padding: 10px 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                position: absolute;
+                top: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .header .btn-home {
+                left: 25px;
+            }
+            .header .btn-home i{
+                font-size: 1.2em;
+            }
+            .header .btn-home:hover{
+                background-color: #2980b9;
+            }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+    {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% else %}
+            <a href="{{ path('user_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% endif %}
+        <a href="{{ path('add_operation') }}" class="btn-add">Ajouter une opération</a>
+        <h1>Gestion des opérations de stock</h1>
+        <a href="{{ path('app_logout') }}" class="btn-logout">Déconnexion</a>
+    </div>
+
+    <div class="main-content">
+        <div class="search-bar">
+            <form method="get" action="{{ path('stock_operations') }}">
+                <input type="text" name="search" placeholder="Rechercher par référence..." value="{{ app.request.query.get('search') }}">
+                <button type="submit">Rechercher</button>
+            </form>
+        </div>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-message flash-{{ label }}">
+                    <i class="fas fa-{{ label == 'success' ? 'check-circle' : (label == 'error' ? 'times-circle' : (label == 'warning' ? 'exclamation-triangle' : 'info-circle')) }}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% if lowStockArticles is not empty %}
+    <div class="alert alert-warning">
+        <p style="color: red;"><strong>Attention!</strong> Les articles suivants sont tombés en dessous du niveau de stock minimum : </p>
+        <ul>
+            {% for article in lowStockArticles %}
+                <li>{{ article.reference }} (Quantity: {{ article.quantite }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{# Display operations #}
+        <ul>
+        {% if operations is empty %}
+            <li class="no-articles">Aucune opération trouvée.</li>
+        {% else %}
+            {% for operation in operations %}
+                <li>
+                    <div class="details">
+                        <strong>Article:</strong> {{ operation.article.reference }}
+                        <strong>Type:</strong> {{ operation.type }}
+                        <strong>Quantité:</strong> {{ operation.quantite }}
+                        <strong>Date:</strong> {{ operation.dateSortie|date('Y-m-d') }}
+                        <p style="color: red;"><strong style="color: red;">Reste:</strong> {{ operation.article.quantite }}</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('edit_operation', { id: operation.id }) }}" class="btn-edit">Modifier</a>
+                        <form action="{{ path('delete_operation', { id: operation.id }) }}" method="post" style="display:inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ operation.id) }}">
+                            <button type="submit" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette opération ?');">Supprimer</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %} 
+        {% endif %}
+            
+        </ul>
+        <a href="{{ path('admin_dashboard') }}" class="btn-back">Retour à l'accueil</a>
+    </div>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const messages = document.querySelectorAll('.flash-message');
+            messages.forEach((message) => {
+                setTimeout(() => {
+                    message.classList.add('hide');
+                    setTimeout(() => {
+                        message.remove();
+                    }, 500);
+                }, 3000);
+            });
+        });
+    </script>
+{% endblock %}
+{% endblock %}

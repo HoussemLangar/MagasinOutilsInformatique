@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Roboto', sans-serif;
+        }
+        .login-container {
+            margin-top: 3%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 85vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 420px;
+            width: 100%;
+            margin: auto;
+        }
+        .card-body {
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 15px;
+        }
+        .form-control {
+            border-radius: 30px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            margin-top: 10px;
+            border-radius: 30px;
+            padding: 0.6rem 1rem;
+            font-size: 1rem;
+            background: #2575fc;
+            border: none;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background: #6a11cb;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.9rem;
+            color: #333;
+            font-size: 0.8rem; 
+        }
+        .form-group input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+        .alert {
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            color: #fff;
+            background-color: #dc3545; /* Default error background color */
+            border: 1px solid #c82333; /* Default error border color */
+        }
+        h2 {
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            font-size: 2rem;
+        }
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+        }
+        .input-group {
+            position: relative;
+        }
+        .checkbox {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container login-container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="mb-4">Login</h2>
+            {% if error is defined and error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="form-group">
+                    <label for="inputEmail">Username</label>
+                    <input type="email" name="Email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Enter your password">
+                        <span class="password-toggle" onclick="togglePasswordVisibility()">👁️</span>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form-group checkbox">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-primary mt-3" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("inputPassword");
+            var passwordToggle = document.querySelector(".password-toggle");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordToggle.textContent = "🙈";
+            } else {
+                passwordField.type = "password";
+                passwordToggle.textContent = "👁️";
+            }
+        }
+    </script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,72 @@
+{# templates/rapport/export.html.twig #}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport {{ rapport.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rapport ID {{ rapport.id }}</h1>
+        <p>Date : {{ rapport.dateJour|date('d/m/Y') }}</p>
+        <p>Quantité Totale : {{ rapport.quantite }}</p>
+
+        
+
+        <h2>Opérations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Article</th>
+                    <th>Date</th>
+                    <th>Quantité</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for operation in rapport.operations %}
+                    <tr>
+                        <td>{{ operation.id }}</td>
+                        <td>{{ operation.article.reference }}</td>
+                        <td>{{ operation.dateSortie|date('d/m/Y') }}</td>
+                        <td>{{ operation.quantite }}</td>
+                        <td>{{ operation.type }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

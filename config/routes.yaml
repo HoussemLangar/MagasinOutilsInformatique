@@ -1,0 +1,175 @@
+controllers:
+    resource:
+        path: '../src/Controller/'
+        namespace: App\Controller
+    type: attribute
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+avatars:
+    path: /avatar/{username}
+    controller: App\Controller\AvatarController::generateAvatar
+
+user_dashboard:
+    path: /dashboard_user
+    controller: App\Controller\UserController::index
+
+admin_dashboard:
+    path: /dashboard_admin
+    controller: App\Controller\AdminController::index
+
+voir_article:
+    path: /articles/voir
+    controller: App\Controller\ArticleController::view
+
+ajouter_article:
+    path: /articles/ajouter
+    controller: App\Controller\ArticleController::add
+
+modifier_article:
+    path: /articles/modifier/{id}
+    controller: App\Controller\ArticleController::edit
+    requirements:
+        id: \d+
+
+supprimer_article:
+    path: /articles/supprimer/{id}
+    controller: App\Controller\ArticleController::delete
+    requirements:
+        id: \d+
+
+generate_barcode:
+  path: /barcode/generate/{code}
+  controller: App\Controller\BarcodeController::generate
+  methods: [GET]
+  requirements:
+    code: .+ 
+
+gestion_utilisateurs:
+    path: /utilisateurs
+    controller: App\Controller\UserManagementController::voirUtilisateurs
+
+voir_utilisateurs:
+    path: /utilisateurs
+    controller: App\Controller\UserManagementController::voirUtilisateurs
+
+creer_utilisateur:
+    path: /utilisateur/creer
+    controller: App\Controller\UserManagementController::creerUtilisateur
+
+modifier_utilisateur:
+    path: /utilisateur/{id}/modifier
+    controller: App\Controller\UserManagementController::modifierUtilisateur
+    requirements:
+        id: \d+
+
+supprimer_utilisateur:
+    path: /utilisateur/{id}/supprimer
+    controller: App\Controller\UserManagementController::supprimerUtilisateur
+    requirements:
+        id: \d+
+
+roles_list:
+    path: /roles
+    controller: App\Controller\RoleManagementController::listRoles
+
+new_role:
+    path: /roles/new
+    controller: App\Controller\RoleManagementController::createRole
+
+edit_role:
+    path: /roles/{id}/edit
+    controller: App\Controller\RoleManagementController::editRole
+    requirements:
+        id: '\d+'
+
+delete_role:
+    path: /roles/{id}/delete
+    controller: App\Controller\RoleManagementController::deleteRole
+    requirements:
+        id: '\d+'
+
+generate_rapport:
+    path: /generate-rapport
+    controller: App\Controller\RapportController::generateRapport
+    
+export_report:
+    path: /reports/export/{id}
+    controller: App\Controller\RapportController::exportRapport
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+report_list:
+    path: /reports
+    controller: App\Controller\RapportController::listRapports
+
+stock_operations:
+    path: /stock/operations
+    controller: App\Controller\StockController::viewOperations
+
+add_operation:
+    path: /stock/operation/add
+    controller: App\Controller\StockController::addOperation
+
+edit_operation:
+    path: /stock/operation/edit/{id}
+    controller: App\Controller\StockController::editOperation
+    requirements:
+        id: \d+
+
+delete_operation:
+    path: /operation/{id}/delete
+    controller: App\Controller\StockController::delete
+    methods: POST
+
+view_etiquettes:
+    path: /etiquettes
+    controller: App\Controller\EtiquetteController::viewEtiquettes
+    methods: GET
+
+magasins_voir:
+    path: /magasins
+    controller: App\Controller\MagasinController::voirMagasins
+
+magasin_ajouter:
+    path: /magasin/ajouter
+    controller: App\Controller\MagasinController::ajouterMagasin
+
+modifier_magasin:
+    path: /magasin/modifier/{id}
+    controller: App\Controller\MagasinController::modifierMagasin
+
+supprimer_magasin:
+    path: /magasin/supprimer/{id}
+    controller: App\Controller\MagasinController::supprimerMagasin
+
+emplacement_voir:
+    path: /emplacements
+    controller: App\Controller\EmplacementController::index
+    methods: GET
+
+emplacement_ajouter:
+    path: /emplacement/ajouter
+    controller: App\Controller\EmplacementController::new
+    methods: [GET, POST]
+
+emplacement_modifier:
+    path: /emplacement/{id}/modifier
+    controller: App\Controller\EmplacementController::edit
+    methods: [GET, POST]
+    requirements:
+        id: '\d+'
+
+emplacement_supprimer:
+    path: /emplacement/{id}/supprimer
+    controller: App\Controller\EmplacementController::delete
+    methods: [GET, POST]
+    requirements:
+        id: '\d+'

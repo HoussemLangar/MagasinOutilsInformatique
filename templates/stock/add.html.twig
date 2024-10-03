@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter une opération{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            gap: 25px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+        .btn-back,
+        .btn-submit {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .btn-back {
+            background-color: #d3d3d3;
+        }
+        .btn-back:hover {
+            background-color: #bfbfbf;
+        }
+        .btn-submit {
+            background-color: #3498db;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #2980b9;
+        }
+        .header .btn-logout {
+            background-color: #2575fc;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 100px;
+        }
+        .header .btn-logout:hover {
+            background-color: #c0392b;
+        }
+        .main-content {
+            padding: 30px 30px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 100px; /* Adjust this value to control the space between the header and the form */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .form-group select,
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .flash-message {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .flash-message i {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        .flash-success {
+            background-color: #28a745;
+            border: 1px solid #1e7e34;
+        }
+        .flash-error {
+            background-color: #dc3545;
+            border: 1px solid #c82333;
+        }
+        .flash-warning {
+            background-color: #ffc107;
+            border: 1px solid #e0a800;
+            color: #212529;
+        }
+        .flash-info {
+            background-color: #17a2b8;
+            border: 1px solid #138496;
+        }
+        .flash-message.show {
+            opacity: 1;
+        }
+        .flash-message.hide {
+            opacity: 0;
+        }
+        .flash-message {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .flash-success i {
+            color: #fff;
+        }
+        .flash-error i {
+            color: #fff;
+        }
+        .flash-warning i {
+            color: #212529;
+        }
+        .flash-info i {
+            color: #fff;
+        }
+                .header .btn-add {
+            left: 100px;
+        }
+        .header .btn-home {
+                padding: 10px 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                position: absolute;
+                top: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .header .btn-home {
+                left: 25px;
+            }
+            .header .btn-home i{
+                font-size: 1.2em;
+            }
+            .header .btn-home:hover{
+                background-color: #2980b9;
+            }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="header">
+{% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% else %}
+            <a href="{{ path('user_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% endif %}
+    <h1>Ajouter une opération</h1>
+    <a href="{{ path('app_logout') }}" class="btn-logout">Déconnexion</a>
+</div>
+
+<div class="main-content">
+    <form method="post">
+        <div class="form-group">
+            <label for="article">Article :</label>
+            <select id="article" name="article_id">
+                {% for article in articles %}
+                    <option value="{{ article.id }}">{{ article.reference }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantité :</label>
+            <input type="number" id="quantity" name="quantity" required>
+        </div>
+
+        <div class="form-group">
+            <label for="type">Type d'opération :</label>
+            <select id="type" name="type">
+                <option value="add">Ajout</option>
+                <option value="subtract">Soustraction</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Ajouter l'opération</button>
+            <a href="{{ path('stock_operations') }}" class="btn-back">Retour à la liste des opérations</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

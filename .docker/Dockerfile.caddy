@@ -1,0 +1,11 @@
+# Use the official Caddy image
+FROM caddy:2.6.4
+
+# Copy Caddy configuration
+COPY .docker/Caddyfile /etc/caddy/Caddyfile
+
+# Expose port 80
+EXPOSE 80
+
+# Start Caddy
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]

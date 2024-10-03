@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter un Article{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            gap: 25px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+        .btn-back {
+            background-color: #d3d3d3;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #bfbfbf;
+        }
+        .main-content {
+            padding: 30px 30px 20px; 
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 100px; /* Adjust this value to control the space between the header and the form */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            flex-basis: 30%;
+            font-weight: 600;
+            color: #555;
+            margin-right: 10px;
+        }
+        .form-group input,
+        .form-group select {
+            flex-basis: 65%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .form-actions .btn-submit {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-actions .btn-submit:hover {
+            background-color: #2980b9;
+        }
+        .header .btn-logout {
+            background-color: #2575fc;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 100px;
+        }
+        .header .btn-logout:hover {
+            background-color: #c0392b;
+        }
+        /* Général */
+.flash-message {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.flash-message i {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+/* Success */
+.flash-success {
+    background-color: #28a745;
+    border: 1px solid #1e7e34;
+}
+
+/* Error */
+.flash-error {
+    background-color: #dc3545;
+    border: 1px solid #c82333;
+}
+
+/* Warning */
+.flash-warning {
+    background-color: #ffc107;
+    border: 1px solid #e0a800;
+    color: #212529;
+}
+
+/* Info */
+.flash-info {
+    background-color: #17a2b8;
+    border: 1px solid #138496;
+}
+
+/* Animations */
+.flash-message.show {
+    opacity: 1;
+}
+
+.flash-message.hide {
+    opacity: 0;
+}
+
+/* Custom Transition for Animations */
+.flash-message {
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Icon Colors */
+.flash-success i {
+    color: #fff;
+}
+
+.flash-error i {
+    color: #fff;
+}
+
+.flash-warning i {
+    color: #212529;
+}
+
+.flash-info i {
+    color: #fff;
+}
+        .header .btn-add {
+            left: 100px;
+        }
+        .header .btn-home {
+                padding: 10px 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                position: absolute;
+                top: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .header .btn-home {
+                left: 25px;
+            }
+            .header .btn-home i{
+                font-size: 1.2em;
+            }
+            .header .btn-home:hover{
+                background-color: #2980b9;
+            }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="header">
+    <h1>Ajouter un Article</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% else %}
+            <a href="{{ path('user_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% endif %}
+    <a href="{{ path('app_logout') }}" class="btn-logout">Déconnexion</a>
+</div>
+
+<div class="main-content">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-message flash-{{ label }}">
+                <i class="fas fa-{{ label == 'success' ? 'check-circle' : (label == 'error' ? 'times-circle' : (label == 'warning' ? 'exclamation-triangle' : 'info-circle')) }}"></i>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {{ form_start(form) }}
+        <div class="form-group">
+            <label>{{ form_label(form.reference) }}</label>
+            {{ form_widget(form.reference) }}
+        </div>
+        <div class="form-group">
+            <label>{{ form_label(form.emplacement) }}</label>
+            {{ form_widget(form.emplacement) }}
+        </div>
+        <div class="form-group">
+            <label>{{ form_label(form.quantite) }}</label>
+            {{ form_widget(form.quantite) }}
+        </div>
+        <div class="form-group">
+            <label>{{ form_label(form.niveauMin) }}</label>
+            {{ form_widget(form.niveauMin) }}
+        </div>
+        <div class="form-group">
+            <label>{{ form_label(form.niveauMax) }}</label>
+            {{ form_widget(form.niveauMax) }}
+        </div>
+        <div class="form-group">
+            <label>{{ form_label(form.dateEntree) }}</label>
+            {{ form_widget(form.dateEntree) }}
+        </div>
+        <div class="form-actions">
+            <a href="{{ path('voir_article') }}" class="btn-back">Retour à la liste des Articles</a>
+            <button type="submit" class="btn-submit">Enregistrer</button>
+        </div>
+    {{ form_end(form) }}
+    <br>
+</div>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const messages = document.querySelectorAll('.flash-message');
+    messages.forEach((message) => {
+        setTimeout(() => {
+            message.classList.add('hide');
+        }, 60000); // Hide after 60 seconds
+    });
+});
+    </script>
+{% endblock %}
+{% endblock %}

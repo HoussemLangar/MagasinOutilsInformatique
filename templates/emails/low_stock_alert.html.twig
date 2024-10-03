@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Alerte de Stock</title>
+    <style>
+        .alert { color: #fff; background-color: #d9534f; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="alert">
+        <p>Bonjour ,</p>
+        <p>Nous tenons à vous informer que l'article <strong>{{ article.reference }}</strong> est tombé en dessous de son niveau de stock minimum.</p>
+        <p>Quantité actuelle : {{ article.quantite }}</p>
+        <p>Veuillez prendre les mesures nécessaires pour réapprovisionner le stock.</p>
+        <p>Merci et bonne journée,</p>
+        <p>L'équipe de gestion des stocks</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un Emplacement{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-size: 16px;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            gap: 25px;
+            position: relative;
+        }
+        .header .btn-add {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            left: 25px;
+        }
+        .header .btn-add:hover {
+            background-color: #2980b9;
+        }
+        .header .btn-logout {
+            background-color: #2575fc;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 60px;
+        }
+        .header .btn-logout:hover {
+            background-color: #c0392b;
+        }
+        .main-content {
+            padding: 80px 30px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        form .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        form label {
+            flex: 0 0 150px;
+            font-weight: 600;
+        }
+        form input,
+        form select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 20px auto 0;
+        }
+        form button:hover {
+            background-color: #2980b9;
+        }
+        .btn-back {
+            background-color: #d3d3d3;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            position: relative;
+            left: 80px;
+        }
+        .btn-back:hover {
+            background-color: #bfbfbf;
+        }
+
+        .flash-message {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+                .header .btn-add {
+            left: 100px;
+        }
+        .header .btn-home {
+                padding: 10px 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                position: absolute;
+                top: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .header .btn-home {
+                left: 25px;
+            }
+            .header .btn-home i{
+                font-size: 1.2em;
+            }
+            .header .btn-home:hover{
+                background-color: #2980b9;
+            }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="header">
+{% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% else %}
+            <a href="{{ path('user_dashboard') }}" class="btn-home"><i class="fas fa-home"></i></a>
+        {% endif %}
+    <a href="{{ path('emplacement_voir') }}" class="btn-add">Retour à la Liste</a>
+    <h1>Modifier un Emplacement</h1>
+    <a href="{{ path('app_logout') }}" class="btn-logout">Déconnexion</a>
+</div>
+
+<div class="main-content">
+<form method="post" action="{{ path('emplacement_modifier', { id: emplacement.id }) }}">
+    {{ form_start(form) }}
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="flash-message">
+            {% for message in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {# Affichage des erreurs globales du formulaire #}
+    {% if form.vars.errors|length > 0 %}
+        <div class="flash-message">
+            <div class="alert alert-danger">
+                {% for error in form.vars.errors %}
+                    <p>{{ error.message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {# Affichage des erreurs pour chaque champ spécifique #}
+    {% for field in form %}
+        {% if field.vars.name != '_token' %}
+            <div class="form-group">
+                {{ form_label(field) }}
+                {{ form_widget(field) }}
+                {# Affichage des erreurs pour le champ spécifique #}
+                {% if field.vars.errors|length > 0 %}
+                    <div class="alert alert-danger">
+                        {% for error in field.vars.errors %}
+                            <p>{{ error.message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_end(form) }}
+</form>
+    <br>
+    <a href="{{ path('emplacement_voir') }}" class="btn-back">Retour à la Liste</a>
+</div>
+
+{% endblock %}

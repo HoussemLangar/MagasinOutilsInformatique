@@ -1,0 +1,26 @@
+security:
+    password_hashers:
+        App\Entity\Utilisateur:
+            algorithm: bcrypt
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: Email
+
+    firewalls:
+        main:
+            provider: app_user_provider
+            custom_authenticator: App\Security\UtilisateurAuthenticator
+            logout:
+                path: app_logout
+                invalidate_session: true
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+
+    access_control:
+        - { path: ^/dashboard_admin, roles: ROLE_ADMIN }
+        - { path: ^/dashboard_user, roles: ROLE_USER }
