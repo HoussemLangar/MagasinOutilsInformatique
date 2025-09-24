@@ -54,7 +54,7 @@ MagasinOutilsInformatique/
 
 ### 1. Clone the project
 ```bash
-git clone https://github.com/username/MagasinOutilsInformatique.git
+git clone https://github.com/username/IT_Tools_Store.git
 cd MagasinOutilsInformatique
 ```
 
