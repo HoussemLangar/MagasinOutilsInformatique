@@ -1,90 +1,90 @@
-# 🛒 Magasin Outils Informatique
+# 🛒 IT Tools Store
 
-Une application **Symfony** permettant la gestion d’un **magasin d’outils informatiques**.  
-Elle inclut la gestion des produits, clients, commandes, ainsi que l’intégration de QR codes et la génération de PDF.
-
----
-
-## 🚀 Fonctionnalités
-
-- 🛠️ Gestion des magasins  
-- 👥 Gestion des utilisateurs  
-- 📦 Gestion des outils informatiques (ajout, modification, suppression)  
-- 📑 Génération de documents d'entrés et sorties en **PDF** avec DomPDF  
-- 🔗 Génération et lecture de **QR Codes**  
-- 🗄️ Persistance des données via **Doctrine ORM**  
+A **Symfony application** for managing an **IT tools store**.  
+It includes product, client, and order management, along with QR code integration and PDF generation.  
 
 ---
 
-## 🛠️ Technologies utilisées
+## 🚀 Features
+
+- 🛠️ Store management  
+- 👥 User management  
+- 📦 IT tools management (add, update, delete)  
+- 📑 Generate **PDF** entry/exit documents with DomPDF  
+- 🔗 Generate and scan **QR Codes**  
+- 🗄️ Data persistence with **Doctrine ORM**  
+
+---
+
+## 🛠️ Technologies Used
 
 - [PHP 8+](https://www.php.net/)  
-- [Symfony 6](https://symfony.com/) – Framework principal  
-- [Doctrine ORM](https://www.doctrine-project.org/) – Base de données  
-- [MySQL](https://www.mysql.com/) – SGBD  
-- [DomPDF](https://github.com/dompdf/dompdf) – Génération de PDF  
+- [Symfony 6](https://symfony.com/) – Main framework  
+- [Doctrine ORM](https://www.doctrine-project.org/) – Database ORM  
+- [MySQL](https://www.mysql.com/) – Database  
+- [DomPDF](https://github.com/dompdf/dompdf) – PDF generation  
 - [Endroid/QRCode](https://github.com/endroid/qr-code) – QR codes  
-- [Docker](https://www.docker.com/) – Conteneurisation  
+- [Docker](https://www.docker.com/) – Containerization  
 
 ---
 
-## 📂 Structure du projet
+## 📂 Project Structure
 
 ```
 MagasinOutilsInformatique/
 ├── assets/           # Frontend (JS, CSS, Stimulus)
-├── bin/              # Console Symfony
-├── config/           # Config Symfony
-├── public/           # Point d’entrée (index.php)
-├── src/              # Code source (Controllers, Entities, Services)
-├── templates/        # Vues Twig
-├── migrations/       # Migrations Doctrine
-├── tests/            # Tests PHPUnit
+├── bin/              # Symfony console
+├── config/           # Symfony config
+├── public/           # Entry point (index.php)
+├── src/              # Source code (Controllers, Entities, Services)
+├── templates/        # Twig views
+├── migrations/       # Doctrine migrations
+├── tests/            # PHPUnit tests
 ├── var/              # Cache, logs
-├── vendor/           # Dépendances PHP
-├── .env              # Variables d’environnement
-├── composer.json     # Dépendances backend
-├── package.json      # Dépendances frontend
-└── docker/           # Config Docker (Caddy, PHP, MySQL)
+├── vendor/           # PHP dependencies
+├── .env              # Environment variables
+├── composer.json     # Backend dependencies
+├── package.json      # Frontend dependencies
+└── docker/           # Docker config (Caddy, PHP, MySQL)
 ```
 
 ---
 
-## ⚙️ Installation & Déploiement
+## ⚙️ Installation & Deployment
 
-### 1. Cloner le projet
+### 1. Clone the project
 ```bash
 git clone https://github.com/username/MagasinOutilsInformatique.git
 cd MagasinOutilsInformatique
 ```
 
-### 2. Installer les dépendances
+### 2. Install dependencies
 ```bash
 composer install
 npm install
 ```
 
-### 3. Configurer la base de données
-Modifier le fichier `.env` pour indiquer vos identifiants MySQL :
+### 3. Configure the database
+Update the `.env` file with your MySQL credentials:
 ```
 DATABASE_URL="mysql://user:password@127.0.0.1:3306/magasin"
 ```
 
-Puis créer la base et lancer les migrations :
+Then create the database and run migrations:
 ```bash
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
-### 4. Lancer le serveur Symfony
+### 4. Run the Symfony server
 ```bash
 symfony serve
 ```
-L’application sera accessible sur [http://localhost:8000](http://localhost:8000) 🚀
+The app will be available at [http://localhost:8000](http://localhost:8000) 🚀  
 
 ---
 
-## 🐳 Exécution avec Docker
+## 🐳 Run with Docker
 
 ```bash
 docker-compose up --build
@@ -100,13 +100,13 @@ php bin/phpunit
 
 ---
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence MIT – libre à toi de le modifier et l’utiliser.  
+This project is licensed under the MIT License – feel free to modify and use it.  
 
 ---
 
-## 👤 Auteur
+## 👤 Author
 
-Développé par **Houssem LANGAR**  
-📧 Email : houssemlangar3@gmail.com  
+Developed by **Houssem LANGAR**  
+📧 Email: houssemlangar3@gmail.com  
